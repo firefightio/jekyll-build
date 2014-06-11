@@ -7,8 +7,8 @@ FROM fedora
 
 # Install Ruby + gems
 RUN yum update -y
-RUN yum install -y ruby gcc g++ make automake autoconf curl-devel openssl-devel zlib-devel httpd-devel apr-devel apr-util-devel sqlite-devel
-RUN yum install -y ruby-rdoc ruby-devel git
+RUN yum install -y ruby gcc gcc-c++ make automake autoconf curl-devel openssl-devel zlib-devel httpd-devel apr-devel apr-util-devel sqlite-devel
+RUN yum install -y ruby-rdoc ruby-devel git which
 RUN yum install -y rubygems
 
 # Install Nodejs
@@ -18,9 +18,10 @@ RUN yum install -y nodejs
 RUN gem install jekyll
 
 # Attach volumes.
-VOLUME /blog
+VOLUME /blog_build
 
 # Git clone of markdown files
+RUN git clone https://github.com/firefightio/blog-firefightio.git 
 
 # Expose ports.
 EXPOSE 80
