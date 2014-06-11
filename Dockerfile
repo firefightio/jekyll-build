@@ -18,13 +18,14 @@ RUN yum install -y nodejs
 RUN gem install jekyll
 
 # Attach volumes.
-VOLUME /blog_build
+RUN mkdir -p /usr/share/nginx/html
+VOLUME /usr/share/nginx/html
 
 # Git clone of markdown files
-RUN git clone https://github.com/firefightio/blog-firefightio.git 
+#RUN git clone https://github.com/firefightio/blog-firefightio.git 
 
 # Build jekyll site
-RUN jekyll build --source /blog-firefightio --destination /blog
+CMD git clone https://github.com/firefightio/blog-firefightio.git && jekyll build --source /blog-firefightio --destination /usr/share/nginx/html && chmod 755 /usr/share/nginx/html
 
-# Define default command.
-CMD ["/bin/bash"]
+# Debug command.
+#CMD ["/bin/bash"]
