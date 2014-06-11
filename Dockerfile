@@ -23,8 +23,8 @@ VOLUME /blog_build
 # Git clone of markdown files
 RUN git clone https://github.com/firefightio/blog-firefightio.git 
 
-# Expose ports.
-EXPOSE 80
+# Build jekyll site
+RUN jekyll build --source /blog-firefightio --destination /blog
 
 # Define default command.
 CMD ["/bin/bash"]
