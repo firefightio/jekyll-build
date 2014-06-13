@@ -1,28 +1,24 @@
 #
-# Jekyll - Fedora
+# Jekyll - Ubuntu
 #
 
 # Pull base image.
-FROM fedora
-
+FROM ubuntu
 # Install Ruby + gems
-RUN yum update -y
-RUN yum install -y ruby gcc gcc-c++ make automake autoconf curl-devel openssl-devel zlib-devel httpd-devel apr-devel apr-util-devel sqlite-devel
-RUN yum install -y ruby-rdoc ruby-devel git which
-RUN yum install -y rubygems
+RUN apt-get update -y
+RUN apt-get upgrade -y
+RUN apt-get install -y git git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 
+RUN apt-get install -y libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties ruby ruby-dev make
 
 # Install Nodejs
-RUN yum install -y nodejs
+RUN apt-get install -y nodejs
 
 # Install Jekyll
-RUN gem install jekyll
+RUN gem install jekyll --no-rdoc --no-ri
 
 # Attach volumes.
 RUN mkdir -p /usr/share/nginx/html
 VOLUME /usr/share/nginx/html
-
-# Git clone of markdown files
-#RUN git clone https://github.com/firefightio/blog-firefightio.git 
 
 # Build jekyll site
 CMD git clone https://github.com/firefightio/blog-firefightio.git && jekyll build --source /blog-firefightio --destination /usr/share/nginx/html && chmod 755 /usr/share/nginx/html
